@@ -5,10 +5,6 @@ const auth = require("./routes/auth");
 const users = require("./routes/user");
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
-const { pool_async } = require("./pool");
-const pool = (async function () {
-  return await pool_async();
-})();
 dotenv.config();
 require("./passport");
 const PORT = process.env.PORT || 5000;
@@ -32,4 +28,3 @@ app.post("/login", function (req, res, next) {
 });
 app.use("/users", passport.authenticate("jwt", { session: false }), users);
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
-module.exports = { pool };

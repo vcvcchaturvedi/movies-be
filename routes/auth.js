@@ -54,6 +54,7 @@ router.get("/movies", async (req, res) => {
     let allMovies = await fetchAllMovies();
     res.send(allMovies);
   } catch (error) {
+    console.log(error);
     res.send([]);
   }
 });

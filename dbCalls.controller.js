@@ -1,6 +1,4 @@
-const mysql = require("mysql");
-const dotenv = require("dotenv");
-const { pool } = require("./index");
+const { pool } = require("./pool");
 const bcrypt = require("bcrypt");
 
 const userExists = async (username) => {
@@ -145,7 +143,6 @@ const addMovie = async (movie) => {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, conn) => {
       if (err) {
-        conn.release();
         resolve(false);
       }
       conn.query("INSERT INTO movies SET ?", movie, (error, result) => {
@@ -161,7 +158,6 @@ const fetchMoviesByUser = async (username) => {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, conn) => {
       if (err) {
-        conn.release();
         resolve([]);
       }
       conn.query(

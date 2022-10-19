@@ -1,14 +1,11 @@
-const mysql = require("promise-mysql");
+const mysql = require("mysql");
 const dotenv = require("dotenv");
 dotenv.config();
-const pool_async = async () => {
-  return mysql.createPool({
-    acquireTimeout: 10000,
-    connectionLimit: 3,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-    host: process.env.INSTANCE_HOST,
-  });
-};
-module.exports = { pool_async };
+const pool = mysql.createPool({
+  connectionLimit: 10,
+  user: "root",
+  password: process.env.PASSWORD,
+  database: "movies",
+  host: process.env.HOST,
+});
+module.exports = { pool };
