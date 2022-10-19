@@ -5,6 +5,5 @@ const pool = mysql.createPool({
   user: "root",
   password: process.env.PASSWORD,
   database: "movies",
-  socketPath: process.env.DB_NAME,
 });
 module.exports = { pool };
