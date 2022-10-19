@@ -1,14 +1,8 @@
 const mysql = require("mysql");
 const dotenv = require("dotenv");
+const { pool } = require("./index");
 const bcrypt = require("bcrypt");
-dotenv.config();
-const pool = mysql.createPool({
-  connectionLimit: 100,
-  host: process.env.HOST,
-  user: "root",
-  password: process.env.PASSWORD,
-  database: "movies",
-});
+
 const userExists = async (username) => {
   return new Promise((resolve, reject) => {
     pool.getConnection((err, conn) => {
