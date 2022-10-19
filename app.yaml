@@ -1,0 +1,11 @@
+runtime: nodejs16
+
+env_variables:
+  INSTANCE_UNIX_SOCKET: "/cloudsql/movies-365907:asia-south1:moviesdb"
+  DB_USER: root
+  DB_PASS: vinay123
+  JWT_KEY: Sunny
+  DB_NAME: movies
+  INSTANCE_HOST: "34.100.184.125"
+beta_settings:
+  cloud_sql_instances: "movies-365907:asia-south1:moviesdb"
