@@ -49,7 +49,10 @@ const fetchAllMovies = async () => {
       }
       conn.query("SELECT * FROM movies", (error, result) => {
         conn.release();
-        if (error) resolve([]);
+        if (error) {
+          console.log(error);
+          resolve([]);
+        }
         resolve(result);
       });
     });

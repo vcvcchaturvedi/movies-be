@@ -3,6 +3,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 const pool_async = async () => {
   return mysql.createPool({
+    acquireTimeout: 10000,
+    connectionLimit: 3,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
