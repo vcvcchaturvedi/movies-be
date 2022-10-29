@@ -1,6 +1,5 @@
 const { pool } = require("./pool");
 const bcrypt = require("bcrypt");
-const { result } = require("@hapi/joi/lib/base");
 
 const userExists = async (username) => {
   return new Promise((resolve, reject) => {
