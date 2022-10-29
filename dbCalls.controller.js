@@ -176,7 +176,9 @@ const fetchMoviesByUser = async (username) => {
             conn.release();
             resolve([]);
           }
-          const ids = resultUser[0].movies ? result.movies.toString() : "";
+          const ids = resultUser[0].movies
+            ? resultUser[0].movies.toString()
+            : "";
 
           conn.query(
             "SELECT * FROM movies WHERE id IN (" + ids + ")",
