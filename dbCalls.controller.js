@@ -102,7 +102,10 @@ const addMoviesToUserFavourites = async (username, ids) => {
         "SELECT movies from users WHERE username=?",
         username,
         (err, resultMovies) => {
-          ids = [...resultMovies[0].movies, ...ids];
+          ids =
+            resultMovies[0].movies && resultMovies[0].movies.length
+              ? [...resultMovies[0].movies, ...ids]
+              : ids;
           conn.query(
             "UPDATE users SET movies=? WHERE username=?",
             [JSON.stringify(ids), username],

@@ -33,6 +33,5 @@ app.use((err, req, res, next) => {
     res.status(500);
     res.send("500 Internal Server error");
   }
-  next();
 });
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
