@@ -1,5 +1,6 @@
 const { pool } = require("./pool");
 const bcrypt = require("bcrypt");
+const { result } = require("@hapi/joi/lib/base");
 
 const userExists = async (username) => {
   return new Promise((resolve, reject) => {
@@ -98,12 +99,19 @@ const addMoviesToUserFavourites = async (username, ids) => {
     pool.getConnection((err, conn) => {
       if (err) resolve(false);
       conn.query(
-        "UPDATE users SET movies=? WHERE username=?",
-        [JSON.stringify(ids), username],
-        (error, result) => {
-          conn.release();
-          if (error) resolve(false);
-          resolve(true);
+        "SELECT movies from users WHERE username=?",
+        username,
+        (err, resultMovies) => {
+          ids = [...resultMovies[0].movies, ...ids];
+          conn.query(
+            "UPDATE users SET movies=? WHERE username=?",
+            [JSON.stringify(ids), username],
+            (error, result) => {
+              conn.release();
+              if (error) resolve(false);
+              resolve(true);
+            }
+          );
         }
       );
     });
@@ -168,12 +176,10 @@ const fetchMoviesByUser = async (username) => {
             conn.release();
             resolve([]);
           }
-          const ids = resultUser[0].movies
-            .toString()
-            .replace("[", "(")
-            .replace("]", ")");
+          const ids = resultUser[0].movies ? result.movies.toString() : "";
+
           conn.query(
-            "SELECT * FROM movies WHERE id IN " + ids,
+            "SELECT * FROM movies WHERE id IN (" + ids + ")",
             (errorFetch, resultMovies) => {
               conn.release();
               if (errorFetch) {

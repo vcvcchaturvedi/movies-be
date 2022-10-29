@@ -50,8 +50,6 @@ router.post("/register", async (req, res) => {
   });
 });
 router.get("/movies", async (req, res) => {
-  console.log("HI    HI    HI");
-  console.log(req.socket.remoteAddress);
   try {
     let allMovies = await fetchAllMovies();
     res.send(allMovies);
